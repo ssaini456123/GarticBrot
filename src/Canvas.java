@@ -10,14 +10,7 @@ public class Canvas {
     private InputManager inputManager;
 
     /**
-     * <b>Note:</b>
-     * <p>
-     * This program does not have the functionality to grab the Gartic Phone canvas dimensions
-     * programmatically. Meaning each <b>Canvas</b> relies on the user to input the dimensions that
-     * correspond to the actual drawable area of Gartic Phone.
-     * </p>
-     *
-     * @param dimV The corners that define the initial and terminal point of the canvas
+     * @param dimV The canvas screen vertices
      */
     public Canvas(DimensionVertex dimV) throws AWTException {
         this.r = new Robot();
@@ -26,7 +19,7 @@ public class Canvas {
     }
 
     /**
-     * @param dimV
+     * @param dimV The canvas screen vertices
      * @param inputManager The input manager
      * @see #Canvas(DimensionVertex, InputManager)
      */
@@ -36,14 +29,7 @@ public class Canvas {
     }
 
     /**
-     * <b>Note:</b>
-     * <p>
-     * This program does not have the functionality to grab the Gartic Phone canvas dimensions
-     * programmatically. Meaning each <b>Canvas</b> relies on the user to input the dimensions that
-     * correspond to the actual drawable area of Gartic Phone.
-     * </p>
-     *
-     * @param dimV
+     * @param dimV The canvas screen vertices
      * @param inputDelay The delay in which the input buffer will have between each
      *                   input action.
      */

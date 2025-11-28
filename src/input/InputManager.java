@@ -13,7 +13,6 @@ public class InputManager implements Runnable {
     private static final List<InputAction> actionBuffer = new ArrayList<>();
 
     /**
-     * Creates a new <b>input.InputManager</b> instance.
      * @throws AWTException default exception thrown by <b>Robot</b>
      */
     public InputManager() throws AWTException {
@@ -22,8 +21,6 @@ public class InputManager implements Runnable {
     }
 
     /**
-     * Creates a new <b>input.InputManager</b> instance with a custom delay
-     * between inputs.
      * @throws AWTException default exception thrown by <b>Robot</b>
      */
     public InputManager(long inputDelay) throws AWTException {
@@ -32,7 +29,6 @@ public class InputManager implements Runnable {
     }
 
     /**
-     * Creates a new <b>input.InputManager</b> instance.
      * @param robotInstance an instance of <b>Robot</b>
      */
     public InputManager(Robot robotInstance) {
@@ -41,8 +37,6 @@ public class InputManager implements Runnable {
     }
 
     /**
-     * Creates a new <b>input.InputManager</b> instance with a custom delay
-     * between inputs.
      * @param robotInstance an instance of <b>Robot</b>
      */
     public InputManager(Robot robotInstance, long inputDelay) {
