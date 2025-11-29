@@ -1,6 +1,7 @@
 package input;
 
 import java.awt.*;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
@@ -8,9 +9,9 @@ import java.util.Queue;
 public class InputManager implements Runnable {
     private Robot robot;
     private long inputDelay;
-    private static final long DEFAULT_INPUT_DELAY = 1;
+    private final Queue<InputAction> actionQueue = new ArrayDeque<>();
 
-    private static final List<InputAction> actionBuffer = new ArrayList<>();
+    private static final long DEFAULT_INPUT_DELAY = 1;
 
     /**
      * @throws AWTException default exception thrown by <b>Robot</b>
@@ -45,11 +46,31 @@ public class InputManager implements Runnable {
     }
 
     public void addInput(InputAction action) {
-        actionBuffer.add(action);
+        actionQueue.add(action);
     }
 
     public void removeInput(InputAction action) {
-        actionBuffer.remove(action);
+        actionQueue.remove(action);
+    }
+
+    public long getInputDelay() {
+        return inputDelay;
+    }
+
+    public void setInputDelay(long inputDelay) {
+        this.inputDelay = inputDelay;
+    }
+
+    public Queue<InputAction> getActionQueue() {
+        return actionQueue;
+    }
+
+    public Robot getRobot() {
+        return robot;
+    }
+
+    public void setRobot(Robot robot) {
+        this.robot = robot;
     }
 
     /**
@@ -58,27 +79,24 @@ public class InputManager implements Runnable {
     @Override
     public void run() {
         while (true) {
-            if (actionBuffer.isEmpty()) {
-                System.out.println("Action buffer is empty.");
+            if (actionQueue.isEmpty()) {
+                //do nu'in
             } else {
-                for (InputAction action : actionBuffer) {
-                    synchronized (actionBuffer) {
-                        String actionClsName = action.toString();
-                        System.out.println("Executing action: " + actionClsName);
+                for (InputAction action : actionQueue) {
+                    String actionClsName = action.toString();
+                    System.out.println("Executing action: " + actionClsName);
 
-                        action.execute();
-                        removeInput(action);
+                    action.execute();
+                    removeInput(action);
 
-                        System.out.println("Removed action: " + actionClsName + " from input buffer.");
+                    System.out.println("Removed action: " + actionClsName + " from input buffer.");
 
-                        try {
-                            Thread.sleep(this.inputDelay);
-                        } catch (InterruptedException e) {
-                            throw new RuntimeException(e);
-                        }
-
-                        break;
+                    try {
+                        Thread.sleep(this.inputDelay);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
                     }
+                    break;
                 }
             }
         }

@@ -1,6 +1,8 @@
 import input.InputManager;
 import input.action.MouseClickAction;
 import input.action.MouseMoveAction;
+import util.DimensionVertex;
+import util.Point;
 
 import java.awt.*;
 
@@ -16,16 +18,6 @@ public class Canvas {
         this.r = new Robot();
         this.dimensionVertex = dimV;
         this.inputManager = new InputManager(this.r);
-    }
-
-    /**
-     * @param dimV The canvas screen vertices
-     * @param inputManager The input manager
-     * @see #Canvas(DimensionVertex, InputManager)
-     */
-    public Canvas(DimensionVertex dimV, InputManager inputManager) throws AWTException {
-        this.dimensionVertex = dimV;
-        this.inputManager = inputManager;
     }
 
     /**
@@ -58,19 +50,64 @@ public class Canvas {
         this.inputManager = inputManager;
     }
 
+    private Robot getR(){
+        return this.r;
+    }
+
+    private void setR(Robot r) {
+        this.r = r;
+    }
+
+    /**
+     * Draws a dot on to the canvas.
+     * @param x The x position
+     * @param y The y position
+     */
     public void drawDot(int x, int y) {
-        InputManager inpM = this.inputManager;
+        InputManager inpM = this.getInputManager();
 
-        Point initialPt = this.dimensionVertex.initialPoint;
-        Point termPt = this.dimensionVertex.terminalPoint;
+        Point initialPt = this.dimensionVertex.getInitialPoint();
+        Point termPt = this.dimensionVertex.getTerminalPoint();
 
-        int[] cornerA = {initialPt.getX(), initialPt.getY()};
-        int[] cornerB = {termPt.getX(), termPt.getY()};
+        int initialX = initialPt.getX();
+        int initialY = initialPt.getY();
 
-        int clampedX = Math.max(cornerA[0], Math.min(x + cornerA[0], cornerB[0]));
-        int clampedY = Math.max(cornerA[1], Math.min(y + cornerA[1], cornerB[1]));
+        int termX = termPt.getX();
+        int termY = termPt.getY();
+
+        int canvasX = initialX + x;
+        int canvasY = initialY + y;
+
+        int clampedX = Math.clamp(canvasX, initialX, termX);
+        int clampedY = Math.clamp(canvasY, initialY, termY);
 
         inpM.addInput(new MouseMoveAction(clampedX, clampedY, this.r));
         inpM.addInput(new MouseClickAction(this.r));
+    }
+
+    /**
+     * Draws a (horizontal) line on to the canvas
+     * @param x The x position
+     * @param y The y position
+     * @param length The length of the line in pixels
+     */
+    public void drawHorizontalLine(int x, int y, int length) {
+        for (int i = 0; i < length; i++) {
+            int xNew = x + i;
+            drawDot(xNew, y);
+        }
+    }
+
+    /**
+     * Draws a (vertical) line on to the canvas.
+     * @param x The x position
+     * @param y The y position
+     * @param length Length of the line in pixels
+     */
+    public void drawVerticalLine(int x, int y, int length) {
+        for (int i = 0; i < length; i++) {
+            int yNew = y + i;
+            drawDot(x, yNew);
+        }
     }
 }

@@ -1,3 +1,5 @@
+package util;
+
 public class DimensionVertex {
     Point initialPoint;
     Point terminalPoint;
