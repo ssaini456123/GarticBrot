@@ -9,7 +9,7 @@ public class InputManager implements Runnable {
     private long inputDelay;
     private final Queue<InputAction> actionQueue = new ArrayDeque<>();
 
-    private static final long DEFAULT_INPUT_DELAY = 1;
+    private static final long DEFAULT_INPUT_DELAY = 0;
 
     /**
      * @throws AWTException default exception thrown by <b>Robot</b>

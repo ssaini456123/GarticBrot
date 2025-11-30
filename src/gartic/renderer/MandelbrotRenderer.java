@@ -26,8 +26,9 @@ public class MandelbrotRenderer implements Renderer {
         return iter == maxIterations;
     }
 
-    private void drawHorizontalSpan(Canvas canvas, int xStart, int y) {
-        canvas.drawDot(xStart, y);
+    private void drawHorizontalSpan(Canvas canvas, int xStart, int y, int xEnd) {
+        int length = xEnd - xStart + 1;
+        canvas.drawHorizontalLine(xStart, y, length);
     }
 
     public void render(Canvas canvas) {
@@ -50,8 +51,8 @@ public class MandelbrotRenderer implements Renderer {
                         if (!isInside(cx, cy)) break;
                         x++;
                     }
-
-                    drawHorizontalSpan(canvas, spanStart, y);
+                    int spanEnd = x - 1;
+                    drawHorizontalSpan(canvas, spanStart, y, spanEnd);
 
                 } else {
                     x++;

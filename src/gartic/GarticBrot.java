@@ -1,6 +1,7 @@
 package gartic;
 
 import gartic.renderer.ImageRenderer;
+import gartic.renderer.MandelbrotRenderer;
 import gartic.renderer.SierpinskiRenderer;
 import gartic.util.DimensionVertex;
 import gartic.util.Point;
@@ -19,13 +20,7 @@ public class GarticBrot {
         DimensionVertex dimensionVertex = new DimensionVertex(p[0], p[1]);
         Canvas canvas = new Canvas(dimensionVertex);
 
-
-        /*
-        SierpinskiRenderer renderer = new SierpinskiRenderer(100,100, 5);
-        renderer.render(canvas);
-        */
-
-        ImageRenderer renderer = new ImageRenderer("",450,200);
+        MandelbrotRenderer renderer = new MandelbrotRenderer(600,200);
         renderer.render(canvas);
         
         Thread inputThread = new Thread(canvas.getInputManager());

@@ -61,13 +61,14 @@ public class Canvas {
     }
 
     /**
-     * Draws a dot on to the canvas.
-     * @param x The x position
-     * @param y The y position
+     * Scales the drawing region to the provided canvas
+     * dimensions
+     * @param x X
+     * @param y Y
+     * @return The clamped coordinates, first element is the clamped x value,
+     * second element is the clamped y value.
      */
-    public void drawDot(int x, int y) {
-        InputManager inpM = this.getInputManager();
-
+    public int[] clampCoordinates(int x, int y) {
         Point initialPt = this.dimensionVertex.getInitialPoint();
         Point termPt = this.dimensionVertex.getTerminalPoint();
 
@@ -83,7 +84,18 @@ public class Canvas {
         int clampedX = Math.clamp(canvasX, initialX, termX);
         int clampedY = Math.clamp(canvasY, initialY, termY);
 
-        inpM.addInput(new MouseMoveAction(clampedX, clampedY, this.r));
+        return new int[]{clampedX, clampedY};
+    }
+
+    /**
+     * Draws a dot on to the canvas.
+     * @param x The x position
+     * @param y The y position
+     */
+    public void drawDot(int x, int y) {
+        InputManager inpM = this.getInputManager();
+        int[] clamped = this.clampCoordinates(x, y);
+        inpM.addInput(new MouseMoveAction(clamped[0], clamped[1], this.r));
         inpM.addInput(new MouseClickAction(this.r));
     }
 
@@ -94,9 +106,14 @@ public class Canvas {
      * @param length The length of the line in pixels
      */
     public void drawHorizontalLine(int x, int y, int length) {
+        int[] clampedCoordinates = this.clampCoordinates(x,y);
+        int clampedX = clampedCoordinates[0];
+        int clampedY = clampedCoordinates[1];
+
         for (int i = 0; i < length; i++) {
-            int xNew = x + i;
-            drawDot(xNew, y);
+            int xNew = clampedX + i;
+            this.getInputManager().addInput(new MouseClickAction(this.r));
+            this.getInputManager().addInput(new MouseMoveAction(xNew, clampedY, this.r));
         }
     }
 
@@ -107,9 +124,14 @@ public class Canvas {
      * @param length Length of the line in pixels
      */
     public void drawVerticalLine(int x, int y, int length) {
+        int[] clampedCoordinates = this.clampCoordinates(x,y);
+        int clampedX = clampedCoordinates[0];
+        int clampedY = clampedCoordinates[1];
+
         for (int i = 0; i < length; i++) {
-            int yNew = y + i;
-            drawDot(x, yNew);
+            int yNew = clampedY + i;
+            this.getInputManager().addInput(new MouseClickAction(this.r));
+            this.getInputManager().addInput(new MouseMoveAction(clampedX, yNew, this.r));
         }
     }
 }
