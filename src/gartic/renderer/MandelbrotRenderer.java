@@ -1,4 +1,8 @@
-public class MandelbrotRenderer {
+package gartic.renderer;
+
+import gartic.Canvas;
+
+public class MandelbrotRenderer implements Renderer {
     private final int width;
     private final int height;
 

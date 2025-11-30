@@ -1,6 +1,6 @@
-package input.action;
+package gartic.input.action;
 
-import input.InputAction;
+import gartic.input.InputAction;
 
 import java.awt.*;
 import java.awt.event.InputEvent;

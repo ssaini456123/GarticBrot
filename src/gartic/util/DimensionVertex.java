@@ -1,4 +1,4 @@
-package util;
+package gartic.util;
 
 public class DimensionVertex {
     Point initialPoint;

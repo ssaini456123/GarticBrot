@@ -1,9 +1,7 @@
-package input;
+package gartic.input;
 
 import java.awt.*;
 import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Queue;
 
 public class InputManager implements Runnable {
@@ -79,20 +77,20 @@ public class InputManager implements Runnable {
     @Override
     public void run() {
         while (true) {
-            if (actionQueue.isEmpty()) {
-                //do nu'in
-            } else {
+            if (!actionQueue.isEmpty()) {
+
                 for (InputAction action : actionQueue) {
+
                     String actionClsName = action.toString();
                     System.out.println("Executing action: " + actionClsName);
 
                     action.execute();
                     removeInput(action);
 
-                    System.out.println("Removed action: " + actionClsName + " from input buffer.");
+                    System.out.println("Removed action: " + actionClsName + " from gartic.input buffer.");
 
                     try {
-                        Thread.sleep(this.inputDelay);
+                        Thread.sleep(this.getInputDelay());
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }

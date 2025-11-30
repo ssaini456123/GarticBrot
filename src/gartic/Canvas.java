@@ -1,8 +1,10 @@
-import input.InputManager;
-import input.action.MouseClickAction;
-import input.action.MouseMoveAction;
-import util.DimensionVertex;
-import util.Point;
+package gartic;
+
+import gartic.input.InputManager;
+import gartic.input.action.MouseClickAction;
+import gartic.input.action.MouseMoveAction;
+import gartic.util.DimensionVertex;
+import gartic.util.Point;
 
 import java.awt.*;
 
@@ -22,8 +24,8 @@ public class Canvas {
 
     /**
      * @param dimV The canvas screen vertices
-     * @param inputDelay The delay in which the input buffer will have between each
-     *                   input action.
+     * @param inputDelay The delay in which the gartic.input buffer will have between each
+     *                   gartic.input action.
      */
     public Canvas(DimensionVertex dimV, long inputDelay) throws AWTException {
         this.r = new Robot();

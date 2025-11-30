@@ -1,4 +1,8 @@
-public class SierpinskiRenderer {
+package gartic.renderer;
+
+import gartic.Canvas;
+
+public class SierpinskiRenderer implements Renderer {
     private final int width;
     private final int height;
     private final int depth;
